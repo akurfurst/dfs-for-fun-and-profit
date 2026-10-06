@@ -1,4 +1,3 @@
-import java.util.Set;
 import java.util.*;
 
 /**
@@ -63,7 +62,17 @@ public class Practice {
    * @return The maximum value of any reachable vertex, or Integer.MIN_VALUE if vertex is null.
    */
   public int max(Vertex<Integer> vertex) {
-    return -1;
+    return max(vertex, new HashSet<Vertex<Integer>>());
+  }
+
+  private int max(Vertex<Integer> vertex, Set<Vertex<Integer>> visited){
+    if(vertex == null || visited.contains(vertex)) return Integer.MIN_VALUE;
+    int max = vertex.data;
+    visited.add(vertex);
+    for(Vertex<Integer> neighbor : vertex.neighbors){
+      max = Math.max(max, max(neighbor, visited));
+    }
+    return max;
   }
 
   /**
